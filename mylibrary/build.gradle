@@ -15,7 +15,7 @@ android {
             cmake {
                 cppFlags "-std=c++11"
             }
-            ndk{
+            ndk{//注意这里，最好只添加armeabi，不然你还需要其他的cpu类型的包，
                 abiFilters "armeabi"
             }
         }
