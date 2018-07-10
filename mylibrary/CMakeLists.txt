@@ -19,12 +19,7 @@ elseif(COMPILER_SUPPORTS_CXX0X)
  endif()
 
 
-find_library( log-lib
-              log )
 
-add_library( native-lib
-             SHARED
-             src/main/cpp/native-lib.cpp )
 
 add_library( avcodec-57
              SHARED
@@ -70,8 +65,16 @@ set_target_properties( swscale-4
 
 include_directories(src/main/cpp/include)
 
+
+aux_source_directory(src/main/cpp/  DIR_LIB_SRCS)
+add_library(ffmpeg-dev SHARED ${DIR_LIB_SRCS})
+
+
+find_library( log-lib
+              log )
+
 #位置也要注意，A B C D E F...A 引用B，B引用C 或D或E，或F或不引用，但是顺序不能变了，后者被前者引用
-target_link_libraries( native-lib
+target_link_libraries( ffmpeg-dev
                        avcodec-57
                        avfilter-6
                        avformat-57

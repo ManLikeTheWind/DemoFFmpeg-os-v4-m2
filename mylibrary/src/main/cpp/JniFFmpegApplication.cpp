@@ -4,13 +4,14 @@
 
 extern "C" {
 #include "libavcodec/avcodec.h"
+#include "JniFFmpegApplication.h"
 }
 
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_dxtest_mylibrary_JniFFmpegApplicaion_stringFromJNI(
         JNIEnv *env,
-        jobject /* this */) {
+        jobject instance) {
 /*    std::string hello = "Hello from C++";
     return env->NewStringUTF(hello.c_str());*/
 

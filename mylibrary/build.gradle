@@ -21,13 +21,13 @@ android {
         }
 //        /**cmakelists----4-4方案二*/
 //        packagingOptions {
-//            pickFirst 'lib/armeabi/libffmpeg00.so'
-//            pickFirst 'lib/arm64-v8a/libffmpeg00.so'
-//            pickFirst 'lib/armeabi-v7a/libffmpeg00.so'
-//            pickFirst 'lib/mips/libffmpeg00.so'
-//            pickFirst 'lib/mips64/libffmpeg00.so'
-//            pickFirst 'lib/x86/libffmpeg00.so'
-//            pickFirst 'lib/x86_64/libffmpeg00.so'
+//            pickFirst 'lib/armeabi/libffmpeg-dev.so'
+//            pickFirst 'lib/arm64-v8a/libffmpeg-dev.so'
+//            pickFirst 'lib/armeabi-v7a/libffmpeg-dev.so'
+//            pickFirst 'lib/mips/libffmpeg-dev.so'
+//            pickFirst 'lib/mips64/libffmpeg-dev.so'
+//            pickFirst 'lib/x86/libffmpeg-dev.so'
+//            pickFirst 'lib/x86_64/libffmpeg-dev.so'
 //        }
     }
     buildTypes {

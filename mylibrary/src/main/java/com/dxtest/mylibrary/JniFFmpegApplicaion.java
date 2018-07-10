@@ -14,7 +14,7 @@ import com.dxtest.mylibrary.base.JNIBaseApplication;
 public class JniFFmpegApplicaion extends JNIBaseApplication {
     // Used to load the 'native-lib' library on application startup.
     static {
-        System.loadLibrary("native-lib");
+        System.loadLibrary("ffmpeg-dev");
     }
     /**
      * A native method that is implemented by the 'native-lib' native library,
