@@ -1,5 +1,7 @@
 package com.dxtest.mylibrary;
 
+import com.dxtest.mylibrary.base.JNIBaseApplication;
+
 /**
  * <br>package: com.dxtest.mylibrary  JniFFmpegApplicaion
  * <br>.author: dongxiang
@@ -9,7 +11,7 @@ package com.dxtest.mylibrary;
  * <br>.e-mail:dongxiang_android_sdk@aliyun.com
  */
 
-public class JniFFmpegApplicaion {
+public class JniFFmpegApplicaion extends JNIBaseApplication {
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
