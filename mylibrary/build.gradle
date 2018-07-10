@@ -1,0 +1,99 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        /**cmakelists----4-3*/
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11"
+            }
+            ndk{
+                abiFilters "armeabi"
+            }
+        }
+//        /**cmakelists----4-4方案二*/
+//        packagingOptions {
+//            pickFirst 'lib/armeabi/libffmpeg00.so'
+//            pickFirst 'lib/arm64-v8a/libffmpeg00.so'
+//            pickFirst 'lib/armeabi-v7a/libffmpeg00.so'
+//            pickFirst 'lib/mips/libffmpeg00.so'
+//            pickFirst 'lib/mips64/libffmpeg00.so'
+//            pickFirst 'lib/x86/libffmpeg00.so'
+//            pickFirst 'lib/x86_64/libffmpeg00.so'
+//        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    /**生成jar包 操作----3-2*/
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+    /**生成jar包 操作----3-3
+     * 3-2-1 单击libs_library右侧（Androidstudio右侧）的gradle，other---双击makeJar；
+     * 3-2-2 运行完毕后：libs_library-->build-->即可看到对应的jar包
+     */
+
+    /**cmakelists----4-1*/
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
+    /**cmakelists----4-2
+     *  jni文件夹列表：sourceSets { main { jni.srcDirs = ['src/main/jni', 'src/main/cpp'] } }
+     *  默认是含有CMakeLists.txt文件里面的jni文件夹，
+     */
+//   sourceSets{//可有可无，这是CMakeLists默认的
+//        main{
+//            jniLibs.srcDirs = ['src/main/jniLibs','libs']//引用外部的so 文件【1.java 使用的，2.jni开发开发引用的】
+//            jni.srcDirs=['src/main/cpp']// jni开发 使用的cpp文件 位置
+//        }
+//    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
+    testCompile 'junit:junit:4.12'
+}
+
+
+/**生成jar包 操作----3-1*/
+def SDK_BASENAME = "TestSdk"
+def SDK_VERSION = "_V1.0"
+def SDK_DESTINATION_PATH = "build/outputs/libs/"//sdk生成的路径
+def zipFile = file('build/intermediates/bundles/release/classes.jar')
+
+task deleteBuild(type:Delete){
+    delete SDK_DESTINATION_PATH+SDK_BASENAME+SDK_VERSION+".jar"
+}
+
+task makeJar(type:Jar){
+    from zipTree(zipFile)
+    from fileTree(dir:'src/main',includes: ['assets/**','res/**'])//将assets 和res目录下的文件放进去
+
+    baseName =SDK_BASENAME+SDK_VERSION
+    destinationDir = file(SDK_DESTINATION_PATH)
+}
+
+makeJar.dependsOn(deleteBuild,build)
